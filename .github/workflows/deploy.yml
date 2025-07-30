@@ -52,8 +52,8 @@ jobs:
           echo "$EC2_PEM_KEY" > key.pem
           chmod 600 key.pem
           ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
-            docker stop your-container-name || true
-            docker rm your-container-name || true
+            docker stop spring-demo-app || true
+            docker rm spring-demo-app || true
             docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-            docker run -d --name your-container-name -p 80:8080 $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            docker run -d --name spring-demo-app -p 8080:8080 $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           EOF
