@@ -52,6 +52,7 @@ jobs:
           echo "$EC2_PEM_KEY" > key.pem
           chmod 600 key.pem
           ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
+            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 144084517183.dkr.ecr.ap-northeast-2.amazonaws.com
             docker stop spring-demo-app || true
             docker rm spring-demo-app || true
             docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
