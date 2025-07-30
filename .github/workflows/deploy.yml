@@ -25,6 +25,13 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      # 🔍 디버깅용 Step
+      - name: Debug environment variables
+        run: |
+          echo "EC2_HOST is: [$EC2_HOST]"
+          echo "EC2_USER is: [$EC2_USER]"
+          echo "PEM key exists? -> ${#EC2_PEM_KEY}"
+
       - name: Copy files to EC2 using SCP
         run: |
           echo "$EC2_PEM_KEY" > key.pem
@@ -37,4 +44,3 @@ jobs:
             pkill -f 'java -jar' || true
             nohup java -jar /home/$EC2_USER/app.jar > app.log 2>&1 &
           "
-
